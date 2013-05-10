@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+# NAME
+#     brd -- command-line interface to X clipboard
+# 
+# SYNOPSIS
+#     brd [-c]
+#     brd [<IN] [>OUT]
+#    
+# DESCRIPTION
+#     Reads or writes X CLIPBOARD contents. If X server is not available, brd
+#     uses ~/.brd file for storing clipboard contents. 
+#
+#     When brd is writing the clipboard, both CLIPBOARD and PRIMARY are set to 
+#     specified value. When brd is reading clipboard, only CLIPBOARD contents
+#     are used.
+#
+#     -c, --clear
+#         clear clipboard contents, ignore input and output; if X server is not 
+#         available, deletes ~/.brd file
+#
+#     With no options, brd does the following:
+# 
+#     - If both stdin and stdout are terminal, print current contents;
+#     - If stdin is redirected, remember input to clipboard;
+#     - If stdout is redirected, print clipboard to output;
+#     - If both stdin and stdout are redirected, first remember input to 
+#       clipboard, then print input to output.
+# 
+# EXAMPLE 
+#     Save text "Hello" to clipboard:
+#
+#         echo Hello | brd  
+#
+#     Print clilpboard contents:
+#
+#         brd               
+#         brd >hello.txt                
+#   
+#     Save text passing through pipe to clipboard:
+# 
+#         echo Hello | brd | cat >hello.txt
+#                                     
+
+# ------------------------------------------------------------------- Setup --
+
+BRD_FILE=~/.brd
+
+if command -v xclip &>/dev/null; then
+    if xclip -o -selection secondary &>/dev/null; then
+        USE_XCLIP=true
+    else
+        USE_XCLIP=false
+    fi
+fi
+
+# --------------------------------------------------------------- Functions --
+
+function usage {
+    echo "USAGE: `basename $0` [-c] [<IN] [>OUT]"
+}
+
+function print_brd {
+    if $USE_XCLIP; then
+        xclip -o -selection clipboard
+    else
+        touch $BRD_FILE
+        cat <$BRD_FILE
+    fi
+}
+
+function set_brd {
+    if $USE_XCLIP; then
+        xclip -i -selection clipboard
+        xclip -o -selection clipboard | xclip -i -selection primary&
+    else
+        cat >$BRD_FILE
+    fi
+}
+
+function clear_brd {
+    echo -n | set_brd
+}
+
+# -------------------------------------------------------------------- Main --
+
+# Check whether we should clear the buffer (-c option)
+# 
+if [ $# -eq 1 -a "$1" = "-c" ]; then
+    clear_brd
+    exit
+fi
+
+# There are no other arguments supported
+#
+if [ $# -ne 0 ]; then
+    usage
+    exit 1
+fi
+
+# Print or set clipboard buffer
+#
+if [ -t 0 -a -t 1 ]; then
+    print_brd
+    exit
+fi
+
+if [ ! -t 0 ]; then
+    set_brd
+fi
+
+if [ ! -t 1 ]; then
+    print_brd
+fi
