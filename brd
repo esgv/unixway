@@ -9,7 +9,7 @@
 #    
 # DESCRIPTION
 #     Reads or writes X CLIPBOARD contents. If X server is not available, brd
-#     uses ~/.brd file for storing clipboard contents. 
+#     uses ~/.brd file as a clipboard buffer. 
 #
 #     When brd is writing the clipboard, both CLIPBOARD and PRIMARY are set to 
 #     specified value. When brd is reading clipboard, only CLIPBOARD contents
