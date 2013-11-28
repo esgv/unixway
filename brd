@@ -46,11 +46,10 @@
 
 BRD_FILE=~/.brd
 
+USE_XCLIP=false
 if command -v xclip &>/dev/null; then
     if xclip -o -selection secondary &>/dev/null; then
         USE_XCLIP=true
-    else
-        USE_XCLIP=false
     fi
 fi
 
