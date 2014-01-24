@@ -22,4 +22,6 @@ deploy $CONF/i3/config ~/.config/i3/config
 deploy $CONF/i3/status ~/.config/i3/status
 deploy $CONF/git       ~/.gitconfig
 deploy $CONF/xprofile  ~/.xprofile
+deploy $CONF/ssh       ~/.ssh/config
 
+chmod -R u=rwX,go= ~/.ssh
