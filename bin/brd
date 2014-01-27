@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 # NAME
 #     brd -- command-line interface to X clipboard
@@ -48,9 +49,27 @@ BRD_FILE=~/.brd
 
 USE_XCLIP=false
 if command -v xclip &>/dev/null; then
-    if xclip -o -selection primary &>/dev/null; then
+
+    # Try to run xclip
+    # If corresponding selection is empty, xclip will fail, so we should try 
+    # all selections before concluding xclip doesn't work because of problem
+    # with X server (not started, etc). When all of these failed, it's still
+    # possible that xclip works -- just selections are really empty -- so we
+    # should try destructive action: store something to primary buffer. If 
+    # even that fails, xclip surely doesn't work because of problem with X 
+    # server, so we should use $BRD_FILE for exchange
+    #
+    if xclip -out -selection primary   &>/dev/null || \
+       xclip -out -selection secondary &>/dev/null || \
+       xclip -out -selection clipboard &>/dev/null || \
+       xclip -in  </dev/null           &>/dev/null
+    then
         USE_XCLIP=true
     fi
+fi
+
+if ! $USE_XCLIP ; then
+    echo "* Using ~/.brd" >&2
 fi
 
 # --------------------------------------------------------------- Functions --
@@ -85,7 +104,7 @@ function clear_brd {
 
 # Check whether we should clear the buffer (-c option)
 # 
-if [ $# -eq 1 -a "$1" = "-c" ]; then
+if [ $# -eq 1 -a "${1:-}" = "-c" ]; then
     clear_brd
     exit
 fi
