@@ -27,3 +27,44 @@ deploy $CONF/vim       ~/.vim
 deploy $CONF/vim/vimrc ~/.vimrc
 
 chmod -R u=rwX,go= ~/.ssh
+
+# ----------------------------------------------------------------- Packages --
+
+apt-get install \
+    subversion \
+    vim \
+    openssh-client \
+    openssh-server \
+    rsync \
+    xorg \
+    i3 \
+    i3status \
+    htop \
+    arandr \
+    network-manager \
+    network-manager-gnome \
+    binutils \
+    gcc-4.8 \
+    iceweasel \
+    cmake \
+    evince \
+    feh \
+    fontconfig \
+    flashplugin-nonfree \
+    ttf-mscorefonts-installer \
+    gdb \
+    graphviz \
+    gnome \
+    python3.4 \
+    ranger \
+    unrar \
+    unzip \
+    xclip \
+    xserver-xorg \
+    xterm \
+    curl \
+    wget
+    #inkscape \
+    #gimp \
+    #texlive
+
