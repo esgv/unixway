@@ -16,12 +16,14 @@ function deploy {
     ln -sf $1 $2
 }
 
+deploy $CONF/ssh       ~/.ssh/config
 deploy $CONF/fonts     ~/.config/fontconfig/fonts.conf
 deploy $CONF/htop      ~/.config/htop/htoprc
 deploy $CONF/i3/config ~/.config/i3/config
 deploy $CONF/i3/status ~/.config/i3/status
 deploy $CONF/git       ~/.gitconfig
 deploy $CONF/xprofile  ~/.xprofile
-deploy $CONF/ssh       ~/.ssh/config
+deploy $CONF/vim       ~/.vim
+deploy $CONF/vim/vimrc ~/.vimrc
 
 chmod -R u=rwX,go= ~/.ssh

@@ -95,7 +95,7 @@ bindsym $mod+0 workspace 10
 
 # workspace <-> screen bindings
 set $screen1 eDP1
-set $screen2 HDMI2
+set $screen2 HDMI1
 workspace 1 output $screen1
 workspace 2 output $screen1
 workspace 3 output $screen1
