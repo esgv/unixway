@@ -1,0 +1,2 @@
+deb http://mirror.yandex.ru/debian/ unstable main non-free contrib
+deb-src http://mirror.yandex.ru/debian/ unstable main non-free contrib

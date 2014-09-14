@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# 1. Upgrade to testing.
+#
+cp sources.list.testing /etc/apt/sources.list
+apt-get update
+apt-get dist-upgrade -y
+
+# 2. Upgrade to unstable.
+cp sources.list.unstable
+apt-get update 
+apt-get dist-upgrade -y
+
