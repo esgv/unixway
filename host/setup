@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# -----------------------------------------------------------------------------
+
+function apt_batch {
+    DEBIAN_FRONTEND=noninteractice apt-get \
+        $@                                   \
+        -y                                   \
+        -o Dpkg::Options::="--force-confdef" \
+        -o Dpkg::Options::="--force-confold"
+}
+
+# -----------------------------------------------------------------------------
+
+# 1. Upgrade to testing.
+#
+#cp sources.list.testing /etc/apt/sources.list
+#apt_batch update
+#apt_batch dist-upgrade
+#apt_batch autoremove
+
+# 2. Upgrade to unstable.
+#
+#cp sources.list.unstable /etc/apt/sources.list
+#apt_batch update
+#apt_batch dist-upgrade
+#apt_batch autoremove
+
+# 3. Install packages
+#
+PACKAGES="
+    subversion
+    vim
+    openssh-client
+    openssh-server
+    rsync
+    xorg
+    i3
+    i3status
+    htop
+    arandr
+    network-manager
+    network-manager-gnome
+    binutils
+    iceweasel
+    cmake
+    evince
+    feh
+    fontconfig
+    flashplugin-nonfree
+    ttf-mscorefonts-installer
+    gdb
+    graphviz
+    gnome
+    gedit
+    ranger
+    unrar
+    unzip
+    xclip
+    xserver-xorg
+    xterm
+    curl
+    wget
+    evince
+    smartmontools
+"
+
+MORE_PACKAGES="
+    inkscape
+    gimp
+    texlive
+gcc-4.8
+python3.4
+"
+
+apt_batch install "$PACKAGES"
+
+# 4. Install locales.
+#
+cp locale.gen /etc
+locale-gen
+
+# 5. Setup default programs
+#
+update-alternatives --set editor `which vim`
+update-alternatives --set pager `which less`
+update-alternatives --set x-terminal-emulator `which uxterm`
+update-alternatives --set x-www-browser `which iceweasel`
+update-alternatives --set x-window-manager `which i3`

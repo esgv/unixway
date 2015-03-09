@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# -------------------------------------------------------------------- Paths --
+
+# Path to direcrory, in which current script resides
+HERE=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# Dir with configuration files
+CONF=$HERE/files
+
+# ----------------------------------------------------------------- Dotfiles --
+
+function deploy {
+    mkdir -p `dirname $2`
+    ln -sf $1 $2
+}
+
+deploy $CONF/profile   ~/.profile
+deploy $CONF/bashrc    ~/.bashrc
+deploy $CONF/ssh       ~/.ssh/config
+deploy $CONF/fonts     ~/.config/fontconfig/fonts.conf
+deploy $CONF/htop      ~/.config/htop/htoprc
+deploy $CONF/i3/config ~/.config/i3/config
+deploy $CONF/i3/status ~/.config/i3/status
+deploy $CONF/git       ~/.gitconfig
+deploy $CONF/xprofile  ~/.xprofile
+deploy $CONF/vim       ~/.vim
+deploy $CONF/vim/vimrc ~/.vimrc
+
+chmod -R u=rwX,go= ~/.ssh
