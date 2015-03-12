@@ -23,13 +23,19 @@ def apt_get(*args):
 
     batch_args = [
         '-y',
-        '-o', 'Dpkg::Options::="--force-confdef"',
-        '-o', 'Dpkg::Options::="--force-confold"'
+        '-o', 'Dpkg::Options::=--force-confdef',
+        '-o', 'Dpkg::Options::=--force-confold'
     ]
 
+    env = {
+        'DEBIAN_FRONTEND': 'noninteractive',
+        'APT_LISTCHANGES_FRONTEND': 'none',
+        'PATH': os.environ['PATH']
+    }
+
     subprocess.check_call(
-        ['apt-get'] + list(args) + batch_args,
-        env={'DEBIAN_FRONTEND': 'noninteractive'}
+        [which('apt-get')] + list(args) + batch_args,
+        env=env
     )
 
 def write_sources_list(repo='stable', mirror='us.debian.org'):
@@ -38,23 +44,23 @@ def write_sources_list(repo='stable', mirror='us.debian.org'):
     given mirror and repository type.
     """
 
-    r = '%s http://%s/debian %s main non-free contrib'
+    r = '%s http://%s/debian %s main non-free contrib\n'
 
     with open('/etc/apt/sources.list', 'wt') as f:
         f.write(r % ('deb', mirror, repo))
         f.write(r % ('deb-src', mirror, repo))
 
-def upgrade_to(repo):
+def upgrade_to(repo, mirror='us.debian.org'):
     """
     Upgrade the whole system to 'testing' or 'unstable'.
     """
 
-    write_sources_list(repo)
+    write_sources_list(repo, mirror)
     apt_get('update')
     apt_get('dist-upgrade')
     apt_get('autoremove')
 
-def install_locales(locales):
+def install_locales(*locales):
     """
     Install given locales.
     """
@@ -69,7 +75,7 @@ def install_locales(locales):
     subprocess.check_call(['locale-gen'])
 
 def which(program_name):
-    result = subprocess.check_output(['which', program_name])
+    result = subprocess.check_output(['which', program_name]).strip(b'\n')
     if not result:
         raise Exception('Program %s not found in PATH' % program_name)
     return result
@@ -83,10 +89,12 @@ def install_packages(*packages):
 ## ----------------------------------------------------------------------------
 #                                     Main
 
+MIRROR = 'mirror.yandex.ru'
+
 def main():
     check_root()
-    upgrade_to('testing')
-    upgrade_to('unstable')
+    #upgrade_to('testing', MIRROR)
+    #upgrade_to('unstable', MIRROR)
     install_locales('en_US.UTF-8')
     install_packages(
         # System
