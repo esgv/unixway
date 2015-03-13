@@ -2,20 +2,20 @@
 
 ## File manipulation ##
 
+- [ls](#ls)
+- [mv](#mv)
+- [cp](#cp)
+- [rm](#rm)
+- [mkdir](#mkdir)
+- [rmdir](#rmdir)
+
     mv SRC DEST             move SRC to DEST
     rm -r  DIR...           recursively delete directories
     rf -rf DIR...           same, but delete read-only files
     mkdir -pv DIR...        create dirs (with parents) and report
     rmdir DIR...            ensure, that directory is empty before deletion
 
-- [``ls``](#ls)
-- [``mv``](#mv)
-- [``cp``](#cp)
-- [``rm``](#rm)
-- [``mkdir``](#mkdir)
-- [``rmdir``](#rmdir)
-
-### ls <a name="ls"></a> ###
+### ls ###
 
 ### mv ###
 
