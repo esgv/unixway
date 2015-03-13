@@ -1,6 +1,5 @@
-============
 Linux system
-============
+############
 
 General options
 ===============
@@ -18,7 +17,7 @@ Specifying byte counts
 ----------------------
 
 Random source
--------------        
+-------------
 
 General information
 ===================
