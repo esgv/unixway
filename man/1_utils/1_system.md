@@ -9,6 +9,8 @@
 - [mkdir](#mkdir)
 - [rmdir](#rmdir)
 
+Some recipes:
+
     mv SRC DEST             move SRC to DEST
     rm -r  DIR...           recursively delete directories
     rf -rf DIR...           same, but delete read-only files
