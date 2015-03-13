@@ -1,5 +1,13 @@
 # System utilities #
 
+- [File manipulation](#file-manipulation)
+- [Special file utilities](#special-file-utilities)
+- [Users and groups](#users-and-groups)
+- [System information](#system-information)
+- [Finding stuff](#finding-stuff)
+- [Invocation](#invocation)
+- [Manipulating processes](#manipulating-processes)
+
 ## File manipulation ##
 
 - [ls](#ls)
@@ -11,9 +19,18 @@
 
 Some recipes:
 
+    ls                      list files
+    ls -lah                 list all files verbosely
+    ls -la                  same, but don't round sizes to MB, GB, etc.
+
     mv SRC DEST             move SRC to DEST
+
+    cp -r SRC DEST          copy recursively SRC to DEST
+    cp -pr SRC DEST         copy and preserve mtime
+
     rm -r  DIR...           recursively delete directories
     rf -rf DIR...           same, but delete read-only files
+
     mkdir -pv DIR...        create dirs (with parents) and report
     rmdir DIR...            ensure, that directory is empty before deletion
 
@@ -141,22 +158,17 @@ Extended bytes are filled with zeros.
         /                       round DOWN to multiple of
         %                       round UP to multiple of
 
-sync
-----
+### sync ###
 
 Write out in-memory disk cache.
 
-[code]
     sync
 
-shred
------
+### shred ###
 
-Users and groups
-================
+## Users and groups ##
 
-chmod
------
+### chmod ###
 
 su
 --
@@ -191,8 +203,7 @@ groups
 users
 -----
 
-System information
-==================
+## System information ##
 
 Summary
 -------
@@ -310,8 +321,7 @@ fuser
 lsof
 ----
 
-Finding stuff
-=============
+## Finding stuff ##
 
 find
 ----
@@ -330,8 +340,7 @@ follow symbolic links.
 
     -a             print all matching pathnames of each argument
 
-Invocation
-==========
+## Invocation ##
 
 xargs
 -----
@@ -432,8 +441,7 @@ Run a command with modified IO buffering.
         0                       disable buffering (write/read as soon as data available)
         SIZE                    set buffer size to SIZE
 
-Manipulating processes
-======================
+## Manipulating processes ##
 
 kill
 ----
