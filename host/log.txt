@@ -1,0 +1,2 @@
+Disable lid switch in /etc/systemd/logind.conf
+Brightness controls in /etc/default/grub
