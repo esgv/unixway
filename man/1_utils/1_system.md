@@ -8,6 +8,10 @@
 - [Invocation](#invocation)
 - [Manipulating processes](#manipulating-processes)
 
+<!--===========================================================================
+                              File manipulation
+-->
+
 ## File manipulation ##
 
 - [ls](#ls)
@@ -29,7 +33,7 @@ Some recipes:
     cp -pr SRC DEST         copy and preserve mtime
 
     rm -r  DIR...           recursively delete directories
-    rf -rf DIR...           same, but delete read-only files
+    rm -rf DIR...           same, but delete read-only files
 
     mkdir -pv DIR...        create dirs (with parents) and report
     rmdir DIR...            ensure, that directory is empty before deletion
@@ -39,7 +43,6 @@ Some recipes:
 ### mv ###
 
 Move (rename) files.
-
 
     mv [OPTION]... SRC DEST
     mv [OPTION]... SRC... DIR
@@ -53,7 +56,7 @@ Move (rename) files.
     -T, --no-target-directory   treat DEST as normal file
     -t, --target-directory=DIR  move all SRC arguments into DIR
 
-    * Can backup existing files.
+    * Can backup existing files (see man).
 
 ### cp ###
 
@@ -96,6 +99,9 @@ Remove empty directory.
     -v, --verbose
     --ignore-fail-on-non-empty
 
+<!---==========================================================================
+                             Special file utilities
+-->
 
 ## Special file utilities ##
 
@@ -127,7 +133,6 @@ Make FIFO, char or block special file.
 
     -m, --mode=MODE             guess what this does
 
-
     * MAJOR or MINOR might be hex.
     * MAJOR and MINOR are mandatory for block and char files.
     * Types
@@ -138,11 +143,8 @@ Make FIFO, char or block special file.
 
 ### truncate ###
 
-Shrink or extend the size of a file.
+Shrink or extend the size of a file. Extended bytes are filled with zeros.
 
-Extended bytes are filled with zeros.
-
-[code]
     truncate [OPTION]... [FILE]...
 
     -s, --size=SIZE             size to truncate or extend to
@@ -150,13 +152,14 @@ Extended bytes are filled with zeros.
     -o, --io-blocks             treat SIZE as # of IO blocks, not bytes
     -r, --reference=RFILE       truncate to size of RFILE
 
-    Also, SIZE may be prepended by
-        +                       extend by
-        -                       reduce by
-        <                       at most
-        >                       at least
-        /                       round DOWN to multiple of
-        %                       round UP to multiple of
+    * Also, SIZE may be prepended by
+
+      +                       extend by
+      -                       reduce by
+      <                       at most
+      >                       at least
+      /                       round DOWN to multiple of
+      %                       round UP to multiple of
 
 ### sync ###
 
@@ -166,68 +169,60 @@ Write out in-memory disk cache.
 
 ### shred ###
 
+<!---==========================================================================
+                               Users and groups
+-->
+
 ## Users and groups ##
 
 ### chmod ###
 
-su
---
+### su ###
 
-who
----
+### who ###
 
-chgrp
------
+### chgrp ###
 
-chown
------
+### chown ###
 
-id
---
+### id ###
 
-logname
--------
+### logname ###
 
 Print the calling user's name, as found in a system-maintained file (often
-`/var/run/utmp` or `/etc/utmp`).
+``/var/run/utmp`` or ``/etc/utmp``).
 
-[code]
     logname
 
-whoami
-------
+### whoami ###
 
-groups
-------
+### groups ###
 
-users
------
+### users ###
 
 ## System information ##
 
-Summary
--------
 
-[code]
+Summary:
+
     hostname [NAME]     print or set current host name
-    hostid              print HEX host identifier (usually, bound to IP address)
-    uptime              print current time, uptime, #logged-in users and load average
-    arch                print machine hardware name (equivalent to `uname -m`)
-    tty                 print the filename of terminal connected to stdin
-    pwd                 print the name of current directory
-    env                 print all envorinment variables
-    nproc               print number of available processors
+    hostid              HEX host identifier (usually bound to IP address)
+    uptime              current time, uptime, #logged-in users and load average
+    arch                machine hardware name (equivalent to `uname -m`)
+    tty                 filename of terminal connected to stdin
+    pwd                 the name of current directory
+    env                 all envorinment variables
+    nproc               number of available processors
 
-    df -h               report disk usage for every mounted volume (with human-readable prefixes)
-    du -sh FILE...      summarize disk usage (non-recursively, with human-readable prefixes)
+    df -h               report disk usage for every mounted volume
+    df -h .             report disk usage for the volume current folder is on
+    du -csh FILE...     summarize disk usage (non-recursively)
     uname -a            print all system information
 
-df
---
+### df ###
 
 Report disk usage.
 
-[code]
     df [OPTION]... [FILE]...
 
     By default, report on each mounted volume.
@@ -248,12 +243,10 @@ Report disk usage.
     --sync                      invoke sync before gathering data
     --no-sync                   this is the default
 
-du
---
+### du ###
 
 Summarize disk usage of each FILE, recursively for directories.
 
-[code]
     du [OPTION]... [FILE]...
 
     -s, --summarize                              display only a total for each argument
@@ -267,46 +260,40 @@ Summarize disk usage of each FILE, recursively for directories.
     -c, --total                                  produce a grand total
     -X, --exclude-from=FILE
 
-uname
------
+### uname ###
 
 Print system information.
 
-[code]
     uname [OPTION]...
 
     -a, --all
     -i, --hardware-platform     "unknown" on Linux          unknown
     -m, --machine               same as arch, eg.           i686
-    -n, --nodename              print hostname              melchior-main
+    -n, --nodename              print hostname              myhost
     -p, --processor             "unknown" on Linux          unknown
     -o, --operating-system      print the OS name           GNU/Linux
     -r, --kernel-release                                    2.6.32-5-686
     -s, --kernel-name                                       Linux
     -v, --kernel-version                                    #1 SMP Sun May 6 04:01:19 UTC 2012
 
-printenv
---------
+### printenv ###
 
 Print environment variables.
 
-If variable names are given, print only values for defined vars, and nothing for undefined.
 
-[code]
     printenv [VARIABLE] ...
 
-stat
-----
+    * If variable names are given, print only values for defined vars, and
+    nothing for undefined.
 
-date
-----
+### stat ###
 
-nproc
------
+### date ###
 
-Print number of processors, AVAILABLE to current process.
+### nproc ###
 
-[code]
+Print number of processors *available to current process*.
+
     nproc [OPTION]
 
     AVAILABLE processors < ONLINE processors < INSTALLED processors
@@ -315,19 +302,18 @@ Print number of processors, AVAILABLE to current process.
     <default>                   print #AVAILABLE, or #INSTALLED, if info inaccessible
     --all                       print number of INSTALLED processors
 
-fuser
------
+### fuser ###
 
-lsof
-----
+### lsof ###
+
+
+
 
 ## Finding stuff ##
 
-find
-----
+### find ###
 
-which
------
+### which ###
 
 Locate a command. `which` returns the pathnames of the files (or links) which
 would be executed in the current environment, had its arguments been given as
@@ -335,24 +321,20 @@ commands in a strictly POSIX-conformant shell. It does this by searching the
 `PATH` for executable files matching the names of the arguments. It does not
 follow symbolic links.
 
-[code]
     which [-a] FILENAME...
 
     -a             print all matching pathnames of each argument
 
 ## Invocation ##
 
-xargs
------
+### xargs ###
 
-chroot
-------
+### chroot ###
 
 Invoke command with root directory changed.
 
 On many systems, only superuser can do that.
 
-[code]
     chroot [OPTION]... NEWROOT [COMMAND [ARGS]...]
 
     --userspec=USER[:GROUP]     specify user and group of new process
@@ -361,12 +343,10 @@ On many systems, only superuser can do that.
     When invoking dynamically linked binaries, don't forget to
     add shared libraries to new root.
 
-env
----
+### env ###
 
 Run command with modified environment.
 
-[code]
     env [OPTION]... [NAME=VALUE]... [CMD [ARGS]...]
 
     With no CMD specified, print resulting environment.
@@ -375,14 +355,12 @@ Run command with modified environment.
     -, -i, --ignore-environment     begin with an empty environment
     -u, --unset=NAME                unset a variable
 
-nice
-----
+### nice ###
 
 Run process with modified niceness (+10 by default).
 
 Only root can decrease niceness.
 
-[code]
     nice [OPTION]... [CMD [ARG]...]
 
     <no command>                print current niceness
@@ -394,23 +372,19 @@ Only root can decrease niceness.
             $ nice -n 10000 nice
             19
 
-nohup
------
+### nohup ###
 
 Run a command, immune to HUP (user logout) signals.
 
-[code]
     nohup CMD [ARG]...
 
     If STDOUT is console, append output to $HOME/nohup.out.
     If STDIN is console, automatically redirect input from /dev/null.
 
-timeout
--------
+### timeout ###
 
 Run a command with a time limit. Send a signal, when time limit exceeds.
 
-[code]
     timeout [OPTION]... DURATIeON CMD [ARG]...
 
     -s, --signal=SIG            signal to send
@@ -421,12 +395,10 @@ Run a command with a time limit. Send a signal, when time limit exceeds.
         * Ability to kill program via Ctrl-C (other key combos also available).
         * Child processes not being killed (controlled/timed out).
 
-stdbuf
-------
+### stdbuf ###
 
 Run a command with modified IO buffering.
 
-[code]
     stdbuf [OPTION]... CMD [ARG]...
 
     * Program must use C FILE streams for IO (dd and cat don't do that).
@@ -441,14 +413,16 @@ Run a command with modified IO buffering.
         0                       disable buffering (write/read as soon as data available)
         SIZE                    set buffer size to SIZE
 
+<!---==========================================================================
+                             Manipulating processes
+-->
+
 ## Manipulating processes ##
 
-kill
-----
+### kill ###
 
 Send a signal to a process (`SIGKILL` by default).
 
-[code]
     kill -SIG PID
     kill -l [SIG]...
 
@@ -456,18 +430,14 @@ Send a signal to a process (`SIGKILL` by default).
     -l, --list                  translate signal names to numbers;
                                 if no signal given, list available signals
 
-killall
--------
+### killall ###
 
-pgrep, pkill
-------------
+### pgrep, pkill ###
 
-pidof
------
+### pidof ###
 
 Find the PID of a running program by executable name.
 
-[code]
     pidof [OPTION]... PROGRAM...
 
     -s                          single-shot; print only one PID (one for all args)
@@ -475,5 +445,4 @@ Find the PID of a running program by executable name.
     -o OMITPID, ...             exclude OMITPID from search; %PPID can be used for pidof invoker
     -c                          include only processes with same root (requires root access)
 
-ps, top
--------
+### ps, top ###
