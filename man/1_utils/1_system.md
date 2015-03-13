@@ -1,12 +1,8 @@
-System utilities
-################
+# System utilities #
 
-File manipulation
-=================
+## File manipulation ##
 
-Summary
--------
-
+### Summary ###
 
     mv SRC DEST             move SRC to DEST
     rm -r  DIR...           recursively delete directories
@@ -14,12 +10,10 @@ Summary
     mkdir -pv DIR...        create dirs (with parents) and report
     rmdir DIR...            ensure, that directory is empty before deletion
 
-ls
---
+### ls ###
 
-mv
---
-before
+### mv ###
+
 Move (rename) files.
 
 
@@ -27,8 +21,6 @@ Move (rename) files.
     mv [OPTION]... SRC... DIR
     mv [OPTION]... -t DIR SRC...
 
-    --backup[=CONTROL] make backup of each existing destination file
-    -b                 like backup, but doesn't accept suffix
     -f, --force        don't prompt before overwriting
     -i, --interactive  prompt before overwriting
     -n, --no-clobber   don't overwrite existing file
@@ -37,48 +29,43 @@ Move (rename) files.
     -T, --no-target-directory   treat DEST as normal file
     -t, --target-directory=DIR  move all SRC arguments into DIR
 
-cp
---
+    * Can backup existing files.
 
-rm
---
+### cp ###
+
+### rm ###
 
 Delete files and folders.
 
-[code]
     rm [OPTION]... FILE...
 
-    -f, --force                     ignore nonexisting files
-    -r, -R, --recursive             recursively delete directories
-    -v, --verbose                   print name of each file before removing it
-    --one-file-system               stay within file system, that each argument is on
+    -f, --force            ignore nonexisting files
+    -r, -R, --recursive    recursively delete directories
+    -v, --verbose          print name of each file before removing it
+    --one-file-system      stay within file system, that each argument is on
 
-    SCRIPTING
-        -I, --interactive=once      prompt once before deleting all files
-        -i, --interactive=always    prompt before deleting each file
-        --interactive=never         this is default
-        --preserve-root             protect from "rm -rf /"; default
-        --no-preserve-root          bad idea possibly
+    * Scripting
 
-mkdir
------
+      -I, --interactive=once      prompt once before deleting all files
+      -i, --interactive=always    prompt before deleting each file
+      --interactive=never         this is default
+      --preserve-root             protect from "rm -rf /"; default
+      --no-preserve-root          bad idea possibly
+
+### mkdir ###
 
 Create empty directory.
 
-[code]
     mkdir [OPTION]... DIR...
 
+    -m, --mode=MODE       set mode bits of new directory
+    -p, --parents         create parents
+    -v, --verbose         print message for each created dir; useful with "-p"
 
-    -m, --mode=MODE             set mode bits of new directory
-    -p, --parents               create parents
-    -v, --verbose               print message for each created dir; useful with "-p"
-
-rmdir
------
+### rmdir ###
 
 Remove empty directory.
 
-[code]
     rmdir [OPTION]... DIR...
 
     -p, --parents               delete empty parents
@@ -86,55 +73,46 @@ Remove empty directory.
     --ignore-fail-on-non-empty
 
 
-Special file utilities
-======================
+## Special file utilities ##
 
-file
-----
+### file ###
 
-Manipulating links
-------------------
+### Manipulating links ###
 
-link/unlink/ln/readlink
------------------------
+### link/unlink/ln/readlink ###
 
-touch
------
+### touch ###
 
-dd
---
+### dd ###
 
-mkfifo
-------
+### mkfifo ###
 
 Create FIFO.
 
-[code]
     mkfifo [OPTION]... FILE...
 
     -m, --mode=MODE              new FIFO permissions
 
-mknod
------
+### mknod ###
 
 Make FIFO, char or block special file.
 
 **Special file** is somethig that can generate or recieve data.
 
-[code]
     mknod [OPTION]... NAME TYPE [MAJOR MINOR]
-    MAJOR or MINOR might be hex.
-    MAJOR and MINOR are mandatory for block and char files.
 
     -m, --mode=MODE             guess what this does
 
-    TYPE
-        p                       FIFO
-        b                       block special file
-        c                       character special file
 
-truncate
---------
+    * MAJOR or MINOR might be hex.
+    * MAJOR and MINOR are mandatory for block and char files.
+    * Types
+
+      p   FIFO
+      b   block special file
+      c   character special file
+
+### truncate ###
 
 Shrink or extend the size of a file.
 
