@@ -105,11 +105,18 @@ Remove empty directory.
 
 ## Special file utilities ##
 
+- [file](#file)
+- [ln, link, unlink, readlink](#ln-link-unlink-readlink)
+- [dd](#dd)
+- [mkfifo](#mkfifo)
+- [mknod](#mknod)
+- [truncate](#truncate)
+- [sync](#sync)
+- [shred](#shred)
+
 ### file ###
 
-### Manipulating links ###
-
-### link/unlink/ln/readlink ###
+### ln, link, unlink, readlink ##
 
 ### touch ###
 
@@ -127,7 +134,7 @@ Create FIFO.
 
 Make FIFO, char or block special file.
 
-**Special file** is somethig that can generate or recieve data.
+**Special file** is something that can generate or recieve data.
 
     mknod [OPTION]... NAME TYPE [MAJOR MINOR]
 
@@ -154,12 +161,12 @@ Shrink or extend the size of a file. Extended bytes are filled with zeros.
 
     * Also, SIZE may be prepended by
 
-      +                       extend by
-      -                       reduce by
-      <                       at most
-      >                       at least
-      /                       round DOWN to multiple of
-      %                       round UP to multiple of
+      +     extend by
+      -     reduce by
+      <     at most
+      >     at least
+      /     round DOWN to multiple of
+      %     round UP to multiple of
 
 ### sync ###
 
@@ -174,6 +181,17 @@ Write out in-memory disk cache.
 -->
 
 ## Users and groups ##
+
+- [chmod](#chmod)
+- [su](#su)
+- [who](#who)
+- [chgrp](#chgrp)
+- [chown](#chown)
+- [id](#id)
+- [logname](#logname)
+- [whoami](#whoami)
+- [groups](#groups)
+- [users](#users)
 
 ### chmod ###
 
@@ -200,8 +218,21 @@ Print the calling user's name, as found in a system-maintained file (often
 
 ### users ###
 
+<!---==========================================================================
+                              System information
+-->
+
 ## System information ##
 
+- [df](#df)
+- [du](#du)
+- [uname](#uname)
+- [printenv](#printenv)
+- [stat](#stat)
+- [date](#date)
+- [nproc](#nproc)
+- [fuser](#fuser)
+- [lsof](#lsof)
 
 Summary:
 
@@ -225,23 +256,23 @@ Report disk usage.
 
     df [OPTION]... [FILE]...
 
-    By default, report on each mounted volume.
-    If FILEs are given, report on each filesystem, any of FILEs is on.
-    Reported in kB.
+    * By default, report on each mounted volume. If FILEs are given, report on
+      each filesystem, any of FILEs is on.
+    * Reported in kB.
 
     -h, --human-readable        use 1024-prefixes: K, M, G, ...
         --total                 print totals (across all drives)
     -i, --inodes                report inode usage instead of byte usage
     -T, --print-types           print filesystem types
-
-    SELECTING FILESYSTEMS
-            --all                   also report dummy filesystems
-        -l, --local                 list only local filesystems
-        -t, --type=FSTYPE           include only FSTYPE (many -t options can be given)
-        -x, --exclude-type=FSTYPE   exclude FSTYPE
-
     --sync                      invoke sync before gathering data
     --no-sync                   this is the default
+
+    * Selecting filesystems
+
+          --all                   also report dummy filesystems
+      -l, --local                 list only local filesystems
+      -t, --type=FSTYPE           include only FSTYPE (can be repeated)
+      -x, --exclude-type=FSTYPE   exclude FSTYPE
 
 ### du ###
 
@@ -280,11 +311,10 @@ Print system information.
 
 Print environment variables.
 
-
     printenv [VARIABLE] ...
 
     * If variable names are given, print only values for defined vars, and
-    nothing for undefined.
+      nothing for undefined.
 
 ### stat ###
 
@@ -296,20 +326,24 @@ Print number of processors *available to current process*.
 
     nproc [OPTION]
 
-    AVAILABLE processors < ONLINE processors < INSTALLED processors
-    $OMP_NUM_THREADS overrides AVAILABLE and ONLINE
+    <default>           print #AVAILABLE, or #INSTALLED, if info inaccessible
+    --all               print number of INSTALLED processors
 
-    <default>                   print #AVAILABLE, or #INSTALLED, if info inaccessible
-    --all                       print number of INSTALLED processors
+    * AVAILABLE processors < ONLINE processors < INSTALLED processors
+    * $OMP_NUM_THREADS overrides AVAILABLE and ONLINE
 
 ### fuser ###
 
 ### lsof ###
 
-
-
+<!---==========================================================================
+                                Finding stuff
+-->
 
 ## Finding stuff ##
+
+- [find](#find)
+- [which](#which)
 
 ### find ###
 
@@ -324,6 +358,10 @@ follow symbolic links.
     which [-a] FILENAME...
 
     -a             print all matching pathnames of each argument
+
+<!---==========================================================================
+                                  Invocation
+-->
 
 ## Invocation ##
 
